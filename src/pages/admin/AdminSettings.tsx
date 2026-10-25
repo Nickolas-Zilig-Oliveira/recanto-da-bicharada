@@ -7,6 +7,7 @@ export function AdminSettings() {
   const [phone, setPhone] = useState("")
   const [whatsapp, setWhatsapp] = useState("")
   const [address, setAddress] = useState("")
+  const [shippingFlat, setShippingFlat] = useState("")
   const [loading, setLoading] = useState(true)
   const [saving, setSaving] = useState(false)
   const [saved, setSaved] = useState(false)
@@ -23,6 +24,8 @@ export function AdminSettings() {
           setPhone(data.phone ?? "")
           setWhatsapp(data.whatsapp ?? "")
           setAddress(data.address ?? "")
+          const rules = data.shipping_rules as { flat_cents?: number } | null
+          setShippingFlat(rules?.flat_cents ? (rules.flat_cents / 100).toString() : "")
         }
         setLoading(false)
       })
@@ -34,9 +37,17 @@ export function AdminSettings() {
     setSaved(false)
     setError(null)
 
+    const flatCents = Math.round(parseFloat(shippingFlat.replace(",", ".")) * 100)
+
     const { error } = await supabase
       .from("store_settings")
-      .update({ trade_name: tradeName, phone, whatsapp, address })
+      .update({
+        trade_name: tradeName,
+        phone,
+        whatsapp,
+        address,
+        shipping_rules: { flat_cents: isNaN(flatCents) ? 0 : flatCents },
+      })
       .eq("id", true)
 
     setSaving(false)
@@ -90,6 +101,17 @@ export function AdminSettings() {
             value={address}
             onChange={(event) => setAddress(event.target.value)}
             rows={2}
+            className="rounded-card border border-carvao/15 px-3 py-2 text-sm outline-none focus:border-mata"
+          />
+        </label>
+
+        <label className="flex flex-col gap-1.5 text-sm text-carvao/80">
+          Taxa de entrega (R$) — retirada na loja é sempre grátis
+          <input
+            inputMode="decimal"
+            value={shippingFlat}
+            onChange={(event) => setShippingFlat(event.target.value)}
+            placeholder="15,00"
             className="rounded-card border border-carvao/15 px-3 py-2 text-sm outline-none focus:border-mata"
           />
         </label>

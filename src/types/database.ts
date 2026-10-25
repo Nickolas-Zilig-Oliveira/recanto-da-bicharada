@@ -289,6 +289,8 @@ export type Database = {
         Row: {
           created_at: string
           customer_id: string | null
+          customer_name: string | null
+          customer_phone: string | null
           delivery_method: string
           fulfillment_status: Database["public"]["Enums"]["fulfillment_status"]
           id: string
@@ -304,6 +306,8 @@ export type Database = {
         Insert: {
           created_at?: string
           customer_id?: string | null
+          customer_name?: string | null
+          customer_phone?: string | null
           delivery_method?: string
           fulfillment_status?: Database["public"]["Enums"]["fulfillment_status"]
           id?: string
@@ -319,6 +323,8 @@ export type Database = {
         Update: {
           created_at?: string
           customer_id?: string | null
+          customer_name?: string | null
+          customer_phone?: string | null
           delivery_method?: string
           fulfillment_status?: Database["public"]["Enums"]["fulfillment_status"]
           id?: string
@@ -563,9 +569,24 @@ export type Database = {
         }
         Returns: undefined
       }
-      is_admin: { Args: never; Returns: boolean }
       admin_exists: { Args: never; Returns: boolean }
       claim_first_admin: { Args: never; Returns: undefined }
+      is_admin: { Args: never; Returns: boolean }
+      place_order: {
+        Args: {
+          p_customer_name: string
+          p_customer_phone: string
+          p_delivery_method: string
+          p_items: Json
+          p_notes?: string
+          p_shipping_address?: Json
+        }
+        Returns: {
+          order_id: string
+          order_number: string
+          total_cents: number
+        }[]
+      }
     }
     Enums: {
       fulfillment_status:

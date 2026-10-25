@@ -1,7 +1,10 @@
 import { Route, Routes } from "react-router-dom"
 import { Layout } from "./components/Layout"
+import { Cart } from "./pages/Cart"
 import { Catalog } from "./pages/Catalog"
+import { Checkout } from "./pages/Checkout"
 import { Home } from "./pages/Home"
+import { OrderConfirmation } from "./pages/OrderConfirmation"
 import { ProductDetail } from "./pages/ProductDetail"
 import { AdminDashboard } from "./pages/admin/AdminDashboard"
 import { AdminLayout } from "./pages/admin/AdminLayout"
@@ -20,6 +23,9 @@ function App() {
         <Route index element={<Home />} />
         <Route path="catalogo" element={<Catalog />} />
         <Route path="produto/:slug" element={<ProductDetail />} />
+        <Route path="carrinho" element={<Cart />} />
+        <Route path="checkout" element={<Checkout />} />
+        <Route path="pedido/:orderId" element={<OrderConfirmation />} />
       </Route>
 
       <Route path="admin/login" element={<AdminLogin />} />

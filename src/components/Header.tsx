@@ -1,5 +1,6 @@
 import { useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
+import { useCart } from "../lib/CartContext"
 import { Logo } from "./Logo"
 
 const navItems = [
@@ -14,6 +15,7 @@ export function Header() {
   const [searchOpen, setSearchOpen] = useState(false)
   const [query, setQuery] = useState("")
   const navigate = useNavigate()
+  const { itemCount } = useCart()
 
   function handleSearch(event: React.FormEvent) {
     event.preventDefault()
@@ -72,19 +74,8 @@ export function Header() {
             )}
           </div>
 
-          <button
-            type="button"
-            aria-label="Minha conta"
-            className="hidden rounded-full p-2 text-carvao/70 transition-colors hover:bg-mata/10 hover:text-mata sm:block"
-          >
-            <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="2">
-              <circle cx="12" cy="8" r="4" />
-              <path d="M4 21c1.6-4 5-6 8-6s6.4 2 8 6" strokeLinecap="round" />
-            </svg>
-          </button>
-
-          <button
-            type="button"
+          <Link
+            to="/carrinho"
             aria-label="Carrinho de compras"
             className="relative rounded-full p-2 text-carvao/70 transition-colors hover:bg-mata/10 hover:text-mata"
           >
@@ -93,10 +84,12 @@ export function Header() {
               <circle cx="10" cy="21" r="1" />
               <circle cx="17" cy="21" r="1" />
             </svg>
-            <span className="absolute -right-0.5 -top-0.5 flex h-4 w-4 items-center justify-center rounded-full bg-terracota text-[10px] font-semibold text-branco">
-              0
-            </span>
-          </button>
+            {itemCount > 0 && (
+              <span className="absolute -right-0.5 -top-0.5 flex h-4 w-4 items-center justify-center rounded-full bg-terracota text-[10px] font-semibold text-branco">
+                {itemCount > 9 ? "9+" : itemCount}
+              </span>
+            )}
+          </Link>
 
           <button
             type="button"

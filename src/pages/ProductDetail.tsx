@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react"
-import { Link, useParams } from "react-router-dom"
+import { Link, useNavigate, useParams } from "react-router-dom"
 import { Button } from "../components/Button"
 import { Sprig } from "../components/BrandMotif"
+import { useCart } from "../lib/CartContext"
 import { getCategoryTone } from "../lib/categoryTone"
 import { supabase } from "../lib/supabase"
+import { useStoreSettings } from "../lib/useStoreSettings"
 
 type ProductDetailData = {
   id: string
@@ -30,6 +32,10 @@ export function ProductDetail() {
   const [loading, setLoading] = useState(true)
   const [notFound, setNotFound] = useState(false)
   const [quantity, setQuantity] = useState(1)
+  const [added, setAdded] = useState(false)
+  const { addItem } = useCart()
+  const storeSettings = useStoreSettings()
+  const navigate = useNavigate()
 
   useEffect(() => {
     if (!slug) return
@@ -80,6 +86,26 @@ export function ProductDetail() {
   const whatsappMessage = encodeURIComponent(
     `Olá! Tenho interesse no produto ${product.name}${product.brand ? ` (${product.brand})` : ""}, ${product.unit}.`,
   )
+  const whatsappHref = storeSettings?.whatsapp
+    ? `https://wa.me/${storeSettings.whatsapp}?text=${whatsappMessage}`
+    : `https://wa.me/?text=${whatsappMessage}`
+
+  function handleAddToCart() {
+    if (!product) return
+    addItem(
+      {
+        productId: product.id,
+        slug: slug!,
+        name: product.name,
+        unit: product.unit,
+        priceCents: product.price_cents,
+        stockQuantity: product.stock_quantity,
+      },
+      quantity,
+    )
+    setAdded(true)
+    setTimeout(() => setAdded(false), 1500)
+  }
 
   return (
     <div className="mx-auto max-w-content px-6 py-10">
@@ -158,17 +184,26 @@ export function ProductDetail() {
           )}
 
           <div className="mt-6 flex flex-wrap gap-4">
-            <Button variant="primary" disabled={!available}>
-              {available ? "Adicionar ao carrinho" : "Indisponível"}
+            <Button variant="primary" disabled={!available} onClick={handleAddToCart}>
+              {!available ? "Indisponível" : added ? "Adicionado ✓" : "Adicionar ao carrinho"}
             </Button>
-            <a href={`https://wa.me/?text=${whatsappMessage}`} target="_blank" rel="noopener noreferrer">
+            <a href={whatsappHref} target="_blank" rel="noopener noreferrer">
               <Button variant="ghost">Consultar pelo WhatsApp</Button>
             </a>
           </div>
 
+          {added && (
+            <button
+              type="button"
+              onClick={() => navigate("/carrinho")}
+              className="mt-3 w-fit text-xs font-medium text-mata hover:underline"
+            >
+              Ver carrinho →
+            </button>
+          )}
+
           <p className="mt-8 text-xs text-carvao/40">
-            Preço e disponibilidade são validados no servidor durante a implementação do checkout
-            (Fase 4).
+            Preço e disponibilidade são validados no servidor no momento da compra.
           </p>
         </div>
       </div>
