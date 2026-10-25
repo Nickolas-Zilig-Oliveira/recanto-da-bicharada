@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react"
 import { Link, useNavigate, useParams } from "react-router-dom"
 import { Button } from "../components/Button"
-import { Sprig } from "../components/BrandMotif"
 import { useCart } from "../lib/CartContext"
 import { getCategoryTone } from "../lib/categoryTone"
 import { supabase } from "../lib/supabase"
@@ -20,10 +19,10 @@ type ProductDetailData = {
   categorySlug: string
 }
 
-const toneStyles = {
-  mata: "bg-mata/90",
-  terracota: "bg-terracota/90",
-  "verde-suave": "bg-verde-suave",
+const accentBar = {
+  mata: "bg-mata",
+  terracota: "bg-terracota",
+  "verde-suave": "bg-mata/40",
 }
 
 export function ProductDetail() {
@@ -124,8 +123,8 @@ export function ProductDetail() {
       </nav>
 
       <div className="mt-6 grid gap-10 lg:grid-cols-2 lg:gap-16">
-        <div className={`relative aspect-square overflow-hidden ${toneStyles[tone]}`}>
-          <Sprig strokeWidth={0.75} className="absolute -right-10 -top-6 h-[140%] w-[70%] text-creme/20" />
+        <div className="surface-sand relative flex aspect-square flex-col overflow-hidden">
+          <span className={`h-1.5 w-full ${accentBar[tone]}`} />
         </div>
 
         <div className="flex flex-col">

@@ -53,3 +53,21 @@
     outline-offset: 2px;
   }
 }
+
+@layer components {
+  /* Quiet, deliberate "surface" for areas without real photography yet —
+     a fine hairline grain + soft gradient, never a flat empty block. */
+  .surface-mata {
+    background-color: var(--color-mata);
+    background-image:
+      repeating-linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0 1px, transparent 1px 8px),
+      radial-gradient(140% 100% at 12% 0%, rgba(255, 255, 255, 0.09), transparent 60%);
+  }
+
+  .surface-sand {
+    background-color: var(--color-verde-suave);
+    background-image:
+      repeating-linear-gradient(135deg, rgba(36, 71, 53, 0.05) 0 1px, transparent 1px 8px),
+      radial-gradient(140% 100% at 12% 0%, rgba(255, 255, 255, 0.6), transparent 60%);
+  }
+}

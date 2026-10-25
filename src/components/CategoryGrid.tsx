@@ -1,12 +1,7 @@
 import { useEffect, useState } from "react"
 import { Link } from "react-router-dom"
-import { Sprig } from "./BrandMotif"
 import { supabase } from "../lib/supabase"
 import type { Tables } from "../types/database"
-
-// Bento rhythm: first and fourth tiles span two columns, breaking the
-// uniform grid a plain category list would otherwise fall into.
-const spanPattern = ["lg:col-span-2", "", "", "lg:col-span-2", "", ""]
 
 export function CategoryGrid() {
   const [categories, setCategories] = useState<Tables<"categories">[]>([])
@@ -31,31 +26,18 @@ export function CategoryGrid() {
         </span>
       </div>
 
-      <div className="mt-6 grid grid-cols-2 gap-3 lg:grid-cols-4">
+      <div className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
         {categories.map((category, index) => {
-          const dark = index % 3 !== 1
+          const dark = index % 2 === 0
           return (
             <Link
               key={category.id}
               to={`/catalogo?categoria=${category.slug}`}
-              className={`group relative flex h-32 flex-col justify-between overflow-hidden p-4 transition-colors duration-150 sm:h-40 ${spanPattern[index % spanPattern.length]} ${
-                dark
-                  ? "bg-mata text-creme hover:bg-mata-escuro"
-                  : "border border-carvao/15 bg-transparent text-carvao hover:border-mata/40"
+              className={`group flex h-28 items-end p-4 transition-opacity duration-150 hover:opacity-90 ${
+                dark ? "surface-mata text-creme" : "surface-sand text-mata"
               }`}
             >
-              <Sprig
-                strokeWidth={1}
-                className={`pointer-events-none absolute -right-4 -top-6 h-28 w-20 transition-transform duration-300 group-hover:translate-y-1 ${
-                  dark ? "text-creme/15" : "text-mata/15"
-                }`}
-              />
-              <span className="relative text-[11px] uppercase tracking-[0.15em] opacity-50">
-                Categoria
-              </span>
-              <span className="relative font-display text-lg leading-tight sm:text-xl">
-                {category.name}
-              </span>
+              <span className="font-display text-lg leading-tight sm:text-xl">{category.name}</span>
             </Link>
           )
         })}

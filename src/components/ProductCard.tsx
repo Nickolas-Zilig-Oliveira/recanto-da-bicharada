@@ -2,7 +2,6 @@ import { useState } from "react"
 import { Link } from "react-router-dom"
 import { useCart } from "../lib/CartContext"
 import { getCategoryTone } from "../lib/categoryTone"
-import { Sprig } from "./BrandMotif"
 import { Button } from "./Button"
 
 export type ProductCardData = {
@@ -18,10 +17,10 @@ export type ProductCardData = {
   categorySlug: string
 }
 
-const toneStyles = {
-  mata: "bg-mata text-creme/20",
-  terracota: "bg-terracota text-creme/20",
-  "verde-suave": "bg-verde-suave text-mata/15",
+const accentBar = {
+  mata: "bg-mata",
+  terracota: "bg-terracota",
+  "verde-suave": "bg-mata/40",
 }
 
 export function ProductCard({ product }: { product: ProductCardData }) {
@@ -48,13 +47,10 @@ export function ProductCard({ product }: { product: ProductCardData }) {
   return (
     <article className="group flex flex-col border border-carvao/10 bg-branco transition-colors duration-150 hover:border-mata/30">
       <Link to={`/produto/${product.slug}`} className="block">
-        <div className={`relative flex h-36 items-end overflow-hidden ${toneStyles[tone]}`}>
-          <Sprig
-            strokeWidth={1}
-            className="pointer-events-none absolute -right-3 -top-2 h-44 w-28 transition-transform duration-300 group-hover:translate-y-1"
-          />
+        <div className="surface-sand relative flex h-36 flex-col overflow-hidden">
+          <span className={`h-1 w-full ${accentBar[tone]}`} />
           {!available && (
-            <span className="absolute inset-0 flex items-center justify-center bg-carvao/55 text-xs font-semibold text-creme">
+            <span className="absolute inset-0 flex items-center justify-center bg-carvao/50 text-xs font-semibold text-creme">
               Indisponível
             </span>
           )}

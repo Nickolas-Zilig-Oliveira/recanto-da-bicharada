@@ -1,20 +1,13 @@
-import { ArchOutline, Sprig } from "./BrandMotif"
 import { Button } from "./Button"
 
 export function Hero() {
+  const mapsHref = "https://www.google.com/maps/search/?api=1&query=" +
+    encodeURIComponent("Estrada Abias da Silva, 2357, Itaquaciara, Itapecerica da Serra, SP")
+
   return (
     <section id="top" className="relative overflow-hidden bg-mata">
-      <Sprig
-        strokeWidth={1}
-        className="pointer-events-none absolute -left-10 top-10 h-[28rem] w-[18rem] text-creme/[0.07] lg:h-[36rem] lg:w-[22rem]"
-      />
-      <ArchOutline
-        strokeWidth={1}
-        className="pointer-events-none absolute -right-16 bottom-[-6rem] h-[26rem] w-[26rem] text-creme/[0.05]"
-      />
-
-      <div className="relative mx-auto grid max-w-content gap-14 px-6 pb-16 pt-14 lg:grid-cols-[1.15fr_0.85fr] lg:items-end lg:gap-10 lg:pb-0 lg:pt-20">
-        <div className="max-w-xl lg:pb-20">
+      <div className="relative mx-auto grid max-w-content gap-12 px-6 pb-14 pt-14 lg:grid-cols-[1.2fr_0.8fr] lg:items-center lg:gap-10 lg:pb-20 lg:pt-20">
+        <div className="max-w-xl">
           <p className="text-xs font-medium uppercase tracking-[0.25em] text-creme/55">
             Itaquaciara · Itapecerica da Serra, SP
           </p>
@@ -41,34 +34,41 @@ export function Hero() {
           </div>
         </div>
 
-        <div className="relative lg:self-stretch">
-          <div
-            className="relative mx-auto aspect-[3/4] w-full max-w-xs bg-creme/[0.06] lg:max-w-sm"
-            style={{
-              clipPath:
-                "path('M0 420 V170 C0 76 72 0 160 0 S320 76 320 170 V420 Z')",
-            }}
-          >
-            <div className="flex h-full flex-col justify-end p-7">
-              <p className="font-display text-xl text-creme">Foto da loja</p>
-              <p className="mt-1 text-sm text-creme/55">
-                Espaço reservado para fotografia profissional (aguardando material).
-              </p>
-            </div>
+        <div className="surface-mata flex flex-col justify-between gap-8 border border-creme/15 p-7">
+          <div>
+            <p className="text-[11px] font-medium uppercase tracking-[0.2em] text-creme/50">
+              Visite a loja
+            </p>
+            <p className="mt-3 font-display text-xl leading-snug text-creme">
+              Estrada Abias da Silva, 2357
+              <br />
+              Itaquaciara, Itapecerica da Serra
+            </p>
           </div>
-          <p className="mt-4 text-center text-xs text-creme/40 lg:hidden">
-            Estrada Abias da Silva, 2357 — Itaquaciara
-          </p>
-        </div>
-      </div>
 
-      <div className="relative border-t border-creme/10">
-        <div className="mx-auto flex max-w-content flex-wrap items-center gap-x-10 gap-y-3 px-6 py-5 text-xs text-creme/50">
-          <span>Fazemos entrega</span>
-          <span className="hidden h-1 w-1 rounded-full bg-creme/30 sm:block" />
-          <span>Atendimento (11) 4667-1430</span>
-          <span className="hidden h-1 w-1 rounded-full bg-creme/30 sm:block" />
-          <span>Estrada Abias da Silva, 2357</span>
+          <dl className="flex flex-col gap-3 text-sm text-creme/75">
+            <div className="flex justify-between gap-3 border-t border-creme/10 pt-3">
+              <dt>Telefone</dt>
+              <dd className="text-creme">(11) 4667-1430</dd>
+            </div>
+            <div className="flex justify-between gap-3 border-t border-creme/10 pt-3">
+              <dt>WhatsApp</dt>
+              <dd className="text-creme">(11) 99399-3322</dd>
+            </div>
+            <div className="flex justify-between gap-3 border-t border-creme/10 pt-3">
+              <dt>Entrega</dt>
+              <dd className="text-creme">Fazemos entrega</dd>
+            </div>
+          </dl>
+
+          <a
+            href={mapsHref}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-1.5 text-sm font-medium text-creme underline decoration-creme/30 underline-offset-4 hover:decoration-creme"
+          >
+            Como chegar →
+          </a>
         </div>
       </div>
     </section>
