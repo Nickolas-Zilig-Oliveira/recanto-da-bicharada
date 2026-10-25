@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react"
 import { Link, useParams } from "react-router-dom"
+import { Button } from "../components/Button"
 import { useCart } from "../lib/CartContext"
 import { supabase } from "../lib/supabase"
 import type { Tables } from "../types/database"
@@ -53,46 +54,45 @@ export function OrderConfirmation() {
 
   return (
     <div className="mx-auto max-w-xl px-6 py-16 text-center">
-      <p className="text-xs font-medium uppercase tracking-[0.2em] text-terracota">Pedido recebido</p>
-      <h1 className="mt-3 font-display text-3xl text-carvao">Obrigado, {order.customer_name}!</h1>
+      <p className="text-xs font-semibold uppercase tracking-[0.2em] text-terracota">Pedido recebido</p>
+      <h1 className="mt-3 font-display text-3xl font-semibold text-carvao">Obrigado, {order.customer_name}!</h1>
       <p className="mt-2 text-sm text-carvao/60">
-        Pedido <span className="font-medium text-carvao">{order.order_number}</span> registrado.
+        Pedido <span className="price-tag font-medium text-carvao">{order.order_number}</span> registrado.
         Entraremos em contato pelo telefone informado para combinar o pagamento
         {order.delivery_method === "entrega" ? " e a entrega" : " e a retirada"}.
       </p>
 
-      <div className="mt-8 border border-carvao/10 p-6 text-left">
+      <div className="mt-8 border-2 border-mata p-6 text-left">
         <ul className="flex flex-col gap-2 text-sm">
           {order.order_items.map((item) => (
             <li key={item.id} className="flex justify-between gap-2 text-carvao/70">
               <span className="min-w-0 truncate">
                 {item.quantity}× {item.product_name}
               </span>
-              <span className="shrink-0">{formatBRL(item.subtotal_cents)}</span>
+              <span className="price-tag shrink-0">{formatBRL(item.subtotal_cents)}</span>
             </li>
           ))}
         </ul>
         <div className="mt-4 flex flex-col gap-1.5 border-t border-carvao/10 pt-4 text-sm">
           <div className="flex justify-between text-carvao/70">
             <span>Subtotal</span>
-            <span>{formatBRL(order.subtotal_cents)}</span>
+            <span className="price-tag">{formatBRL(order.subtotal_cents)}</span>
           </div>
           <div className="flex justify-between text-carvao/70">
             <span>Frete</span>
-            <span>{order.shipping_cents > 0 ? formatBRL(order.shipping_cents) : "Grátis"}</span>
+            <span className="price-tag">
+              {order.shipping_cents > 0 ? formatBRL(order.shipping_cents) : "Grátis"}
+            </span>
           </div>
-          <div className="flex justify-between pt-1 font-display text-lg text-mata">
+          <div className="flex justify-between pt-1 font-display text-lg font-semibold text-mata">
             <span>Total</span>
-            <span>{formatBRL(order.total_cents)}</span>
+            <span className="price-tag">{formatBRL(order.total_cents)}</span>
           </div>
         </div>
       </div>
 
-      <Link
-        to="/catalogo"
-        className="mt-8 inline-block rounded-pill bg-mata px-6 py-3 text-sm font-medium text-creme hover:bg-mata-escuro"
-      >
-        Continuar comprando
+      <Link to="/catalogo" className="mt-8 inline-block">
+        <Button variant="secondary">Continuar comprando</Button>
       </Link>
     </div>
   )

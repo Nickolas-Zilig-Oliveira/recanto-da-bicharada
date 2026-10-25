@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react"
 import { Link } from "react-router-dom"
+import { Button } from "../../components/Button"
 import { supabase } from "../../lib/supabase"
 
 type Stats = {
@@ -60,22 +61,22 @@ export function AdminDashboard() {
 
   return (
     <div>
-      <h1 className="font-display text-2xl text-carvao">Dashboard</h1>
+      <h1 className="font-display text-2xl font-semibold text-carvao">Dashboard</h1>
       <p className="mt-1 text-sm text-carvao/60">Visão geral da loja — dados ao vivo do banco.</p>
 
       {loading ? (
         <p className="mt-8 text-sm text-carvao/50">Carregando...</p>
       ) : (
-        <div className="mt-8 grid grid-cols-2 gap-4 lg:grid-cols-3">
+        <div className="mt-8 grid grid-cols-2 gap-3 lg:grid-cols-3">
           {cards.map((card) => (
             <Link
               key={card.label}
               to={card.to}
-              className="rounded-card bg-branco p-5 shadow-card transition-shadow hover:shadow-lifted"
+              className="border-2 border-carvao/15 bg-branco p-5 transition-colors hover:border-mata"
             >
-              <p className="text-xs font-medium uppercase tracking-wide text-carvao/50">{card.label}</p>
+              <p className="text-xs font-semibold uppercase tracking-wide text-carvao/50">{card.label}</p>
               <p
-                className={`mt-2 font-display text-3xl ${
+                className={`price-tag mt-2 text-3xl font-medium ${
                   card.warn ? "text-terracota" : "text-mata"
                 }`}
               >
@@ -87,17 +88,11 @@ export function AdminDashboard() {
       )}
 
       <div className="mt-10 flex flex-wrap gap-3">
-        <Link
-          to="/admin/produtos/novo"
-          className="rounded-pill bg-terracota px-5 py-2.5 text-sm font-medium text-branco hover:bg-terracota-escuro"
-        >
-          + Novo produto
+        <Link to="/admin/produtos/novo">
+          <Button variant="primary">+ Novo produto</Button>
         </Link>
-        <Link
-          to="/admin/estoque"
-          className="rounded-pill bg-mata/5 px-5 py-2.5 text-sm font-medium text-mata hover:bg-mata/10"
-        >
-          Ajustar estoque
+        <Link to="/admin/estoque">
+          <Button variant="ghost">Ajustar estoque</Button>
         </Link>
       </div>
     </div>

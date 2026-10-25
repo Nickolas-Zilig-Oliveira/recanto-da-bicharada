@@ -43,10 +43,10 @@ export function AdminOrders() {
 
   return (
     <div>
-      <h1 className="font-display text-2xl text-carvao">Pedidos</h1>
+      <h1 className="font-display text-2xl font-semibold text-carvao">Pedidos</h1>
       <p className="mt-1 text-sm text-carvao/60">{orders.length} pedidos registrados.</p>
 
-      <div className="mt-6 overflow-x-auto rounded-card bg-branco shadow-card">
+      <div className="mt-6 overflow-x-auto border-2 border-mata/15 bg-branco">
         <table className="w-full text-left text-sm">
           <thead className="border-b border-carvao/10 text-xs uppercase tracking-wide text-carvao/50">
             <tr>
@@ -99,7 +99,7 @@ export function AdminOrders() {
                       ))}
                     </select>
                   </td>
-                  <td className="px-4 py-3 text-carvao/70">
+                  <td className="price-tag px-4 py-3 text-carvao/70">
                     {(order.total_cents / 100).toLocaleString("pt-BR", {
                       style: "currency",
                       currency: "BRL",

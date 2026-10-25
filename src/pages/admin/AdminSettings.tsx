@@ -62,7 +62,7 @@ export function AdminSettings() {
 
   return (
     <div className="max-w-xl">
-      <h1 className="font-display text-2xl text-carvao">Configurações da loja</h1>
+      <h1 className="font-display text-2xl font-semibold text-carvao">Configurações da loja</h1>
       <p className="mt-1 text-sm text-carvao/60">
         Dados exibidos no site (rodapé, contato). Nenhum segredo ou credencial de pagamento vai aqui.
       </p>

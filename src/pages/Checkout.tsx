@@ -86,12 +86,12 @@ export function Checkout() {
 
   return (
     <div className="mx-auto max-w-content px-6 py-10">
-      <h1 className="font-display text-3xl text-carvao">Finalizar pedido</h1>
+      <h1 className="font-display text-3xl font-semibold text-carvao">Finalizar pedido</h1>
 
       <div className="mt-8 flex flex-col gap-10 lg:flex-row">
         <form onSubmit={handleSubmit} className="flex-1 flex flex-col gap-6">
-          <div className="flex flex-col gap-4 border border-carvao/10 p-5">
-            <h2 className="font-display text-lg text-carvao">Seus dados</h2>
+          <div className="flex flex-col gap-4 border-2 border-mata/20 p-5">
+            <h2 className="font-display text-lg font-semibold text-carvao">Seus dados</h2>
             <label className="flex flex-col gap-1.5 text-sm text-carvao/80">
               Nome completo
               <input
@@ -113,32 +113,32 @@ export function Checkout() {
             </label>
           </div>
 
-          <div className="flex flex-col gap-4 border border-carvao/10 p-5">
-            <h2 className="font-display text-lg text-carvao">Entrega</h2>
+          <div className="flex flex-col gap-4 border-2 border-mata/20 p-5">
+            <h2 className="font-display text-lg font-semibold text-carvao">Entrega</h2>
             <div className="flex gap-3">
               <button
                 type="button"
                 onClick={() => setDeliveryMethod("retirada")}
-                className={`flex-1 rounded-card border px-4 py-3 text-left text-sm transition-colors ${
+                className={`flex-1 border-2 px-4 py-3 text-left text-sm transition-colors ${
                   deliveryMethod === "retirada"
-                    ? "border-mata bg-mata/5 text-mata"
+                    ? "border-mata bg-mata text-creme"
                     : "border-carvao/15 text-carvao/70"
                 }`}
               >
-                <span className="font-medium">Retirar na loja</span>
-                <p className="text-xs text-carvao/50">Grátis</p>
+                <span className="font-semibold">Retirar na loja</span>
+                <p className="price-tag text-xs opacity-75">Grátis</p>
               </button>
               <button
                 type="button"
                 onClick={() => setDeliveryMethod("entrega")}
-                className={`flex-1 rounded-card border px-4 py-3 text-left text-sm transition-colors ${
+                className={`flex-1 border-2 px-4 py-3 text-left text-sm transition-colors ${
                   deliveryMethod === "entrega"
-                    ? "border-mata bg-mata/5 text-mata"
+                    ? "border-mata bg-mata text-creme"
                     : "border-carvao/15 text-carvao/70"
                 }`}
               >
-                <span className="font-medium">Entrega</span>
-                <p className="text-xs text-carvao/50">
+                <span className="font-semibold">Entrega</span>
+                <p className="price-tag text-xs opacity-75">
                   {flatShippingCents > 0 ? formatBRL(flatShippingCents) : "A combinar"}
                 </p>
               </button>
@@ -216,7 +216,9 @@ export function Checkout() {
           </label>
 
           {error && (
-            <p className="rounded-card bg-terracota/10 px-4 py-2 text-sm text-terracota-escuro">{error}</p>
+            <p className="border-2 border-terracota bg-terracota/10 px-4 py-2 text-sm text-terracota-escuro">
+              {error}
+            </p>
           )}
 
           <p className="text-xs text-carvao/45">
@@ -230,30 +232,30 @@ export function Checkout() {
         </form>
 
         <aside className="shrink-0 lg:w-80">
-          <div className="border border-carvao/10 p-5">
-            <h2 className="font-display text-lg text-carvao">Resumo</h2>
+          <div className="border-2 border-mata p-5">
+            <h2 className="font-display text-lg font-semibold text-carvao">Resumo</h2>
             <ul className="mt-4 flex flex-col gap-2 text-sm">
               {items.map((item) => (
                 <li key={item.productId} className="flex justify-between gap-2 text-carvao/70">
                   <span className="min-w-0 truncate">
                     {item.quantity}× {item.name}
                   </span>
-                  <span className="shrink-0">{formatBRL(item.priceCents * item.quantity)}</span>
+                  <span className="price-tag shrink-0">{formatBRL(item.priceCents * item.quantity)}</span>
                 </li>
               ))}
             </ul>
             <div className="mt-4 flex flex-col gap-1.5 border-t border-carvao/10 pt-4 text-sm">
               <div className="flex justify-between text-carvao/70">
                 <span>Subtotal</span>
-                <span>{formatBRL(subtotalCents)}</span>
+                <span className="price-tag">{formatBRL(subtotalCents)}</span>
               </div>
               <div className="flex justify-between text-carvao/70">
                 <span>Frete</span>
-                <span>{shippingCents > 0 ? formatBRL(shippingCents) : "Grátis"}</span>
+                <span className="price-tag">{shippingCents > 0 ? formatBRL(shippingCents) : "Grátis"}</span>
               </div>
-              <div className="flex justify-between pt-1 font-display text-lg text-mata">
+              <div className="flex justify-between pt-1 font-display text-lg font-semibold text-mata">
                 <span>Total</span>
-                <span>{formatBRL(totalCents)}</span>
+                <span className="price-tag">{formatBRL(totalCents)}</span>
               </div>
             </div>
           </div>

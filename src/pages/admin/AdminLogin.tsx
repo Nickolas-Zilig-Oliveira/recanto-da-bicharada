@@ -51,8 +51,8 @@ export function AdminLogin() {
           <Logo />
         </div>
 
-        <div className="rounded-card bg-branco p-8 shadow-card">
-          <h1 className="font-display text-xl text-carvao">
+        <div className="border-2 border-mata bg-branco p-8">
+          <h1 className="font-display text-xl font-semibold text-carvao">
             {mode === "login" ? "Acesso administrativo" : "Criar conta administrativa"}
           </h1>
           <p className="mt-1 text-sm text-carvao/60">

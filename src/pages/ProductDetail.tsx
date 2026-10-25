@@ -19,10 +19,10 @@ type ProductDetailData = {
   categorySlug: string
 }
 
-const accentBar = {
-  mata: "bg-mata",
-  terracota: "bg-terracota",
-  "verde-suave": "bg-mata/40",
+const panelStyles = {
+  mata: "bg-mata text-creme",
+  terracota: "bg-terracota text-creme",
+  "verde-suave": "bg-verde-suave text-mata",
 }
 
 export function ProductDetail() {
@@ -123,15 +123,23 @@ export function ProductDetail() {
       </nav>
 
       <div className="mt-6 grid gap-10 lg:grid-cols-2 lg:gap-16">
-        <div className="surface-sand relative flex aspect-square flex-col overflow-hidden">
-          <span className={`h-1.5 w-full ${accentBar[tone]}`} />
+        <div className={`relative flex aspect-square flex-col justify-between border-2 border-carvao/15 p-6 ${panelStyles[tone]}`}>
+          <span className="text-xs font-semibold uppercase tracking-[0.2em] opacity-70">
+            {product.categoryName}
+          </span>
+          <span className="price-tag self-end text-5xl font-medium leading-none sm:text-6xl">
+            {(product.price_cents / 100).toLocaleString("pt-BR", {
+              style: "currency",
+              currency: "BRL",
+            })}
+          </span>
         </div>
 
         <div className="flex flex-col">
           {product.brand && (
             <p className="text-xs uppercase tracking-wide text-carvao/45">{product.brand}</p>
           )}
-          <h1 className="mt-1 font-display text-3xl text-carvao">{product.name}</h1>
+          <h1 className="mt-1 font-display text-3xl font-semibold text-carvao">{product.name}</h1>
 
           {product.description && (
             <p className="mt-4 text-sm leading-relaxed text-carvao/70">{product.description}</p>
@@ -151,15 +159,8 @@ export function ProductDetail() {
             )}
           </div>
 
-          <p className="mt-6 font-display text-4xl text-mata">
-            {(product.price_cents / 100).toLocaleString("pt-BR", {
-              style: "currency",
-              currency: "BRL",
-            })}
-          </p>
-
           {available && (
-            <div className="mt-6 flex items-center gap-3">
+            <div className="mt-8 flex items-center gap-3">
               <div className="flex items-center rounded-pill border border-carvao/15">
                 <button
                   type="button"

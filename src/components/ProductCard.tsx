@@ -17,10 +17,10 @@ export type ProductCardData = {
   categorySlug: string
 }
 
-const accentBar = {
-  mata: "bg-mata",
-  terracota: "bg-terracota",
-  "verde-suave": "bg-mata/40",
+const panelStyles = {
+  mata: "bg-mata text-creme",
+  terracota: "bg-terracota text-creme",
+  "verde-suave": "bg-verde-suave text-mata",
 }
 
 export function ProductCard({ product }: { product: ProductCardData }) {
@@ -45,12 +45,20 @@ export function ProductCard({ product }: { product: ProductCardData }) {
   }
 
   return (
-    <article className="group flex flex-col border border-carvao/10 bg-branco transition-colors duration-150 hover:border-mata/30">
+    <article className="group flex flex-col border-2 border-carvao/15 bg-branco transition-colors duration-150 hover:border-mata">
       <Link to={`/produto/${product.slug}`} className="block">
-        <div className="surface-sand relative flex h-36 flex-col overflow-hidden">
-          <span className={`h-1 w-full ${accentBar[tone]}`} />
+        <div className={`relative flex h-32 flex-col justify-between p-3 ${panelStyles[tone]}`}>
+          <span className="text-[10px] font-semibold uppercase tracking-wide opacity-70">
+            {product.categoryName}
+          </span>
+          <span className="price-tag self-end text-2xl font-medium leading-none">
+            {(product.price_cents / 100).toLocaleString("pt-BR", {
+              style: "currency",
+              currency: "BRL",
+            })}
+          </span>
           {!available && (
-            <span className="absolute inset-0 flex items-center justify-center bg-carvao/50 text-xs font-semibold text-creme">
+            <span className="absolute inset-0 flex items-center justify-center bg-carvao/60 text-xs font-bold uppercase tracking-wide text-creme">
               Indisponível
             </span>
           )}
@@ -59,44 +67,37 @@ export function ProductCard({ product }: { product: ProductCardData }) {
 
       <div className="flex flex-1 flex-col gap-2 p-4">
         <div>
-          <p className="text-[11px] uppercase tracking-wide text-carvao/40">
-            {product.categoryName}
-            {product.brand && ` · ${product.brand}`}
-          </p>
+          {product.brand && (
+            <p className="text-[11px] uppercase tracking-wide text-carvao/40">{product.brand}</p>
+          )}
           <Link to={`/produto/${product.slug}`}>
-            <h3 className="mt-0.5 text-sm font-semibold text-carvao hover:text-mata">{product.name}</h3>
+            <h3 className="mt-0.5 text-sm font-semibold text-carvao hover:text-terracota">
+              {product.name}
+            </h3>
           </Link>
           <p className="text-xs text-carvao/55">{product.unit}</p>
         </div>
 
         {lowStock && (
-          <p className="text-[11px] font-medium text-terracota">
-            Últimas {product.stock_quantity} unidades
+          <p className="text-[11px] font-semibold uppercase tracking-wide text-terracota">
+            Últimas {product.stock_quantity} un.
           </p>
         )}
 
-        <div className="mt-auto flex flex-col gap-2 pt-1">
-          <span className="font-display text-lg text-mata">
-            {(product.price_cents / 100).toLocaleString("pt-BR", {
-              style: "currency",
-              currency: "BRL",
-            })}
-          </span>
-          <Button
-            variant="primary"
-            className="w-full px-4 py-2 text-xs"
-            disabled={!available || inCart >= product.stock_quantity}
-            onClick={handleAdd}
-          >
-            {!available
-              ? "Indisponível"
-              : added
-                ? "Adicionado ✓"
-                : inCart >= product.stock_quantity
-                  ? "Limite no carrinho"
-                  : "Adicionar"}
-          </Button>
-        </div>
+        <Button
+          variant="primary"
+          className="mt-auto w-full px-4 py-2 text-xs"
+          disabled={!available || inCart >= product.stock_quantity}
+          onClick={handleAdd}
+        >
+          {!available
+            ? "Indisponível"
+            : added
+              ? "Adicionado ✓"
+              : inCart >= product.stock_quantity
+                ? "Limite"
+                : "Adicionar"}
+        </Button>
       </div>
     </article>
   )

@@ -1,30 +1,32 @@
 @import "tailwindcss";
 
 @theme {
-  /* Paleta — campo contemporâneo */
-  --color-mata: #244735;
-  --color-mata-escuro: #1a3527;
-  --color-creme: #f4ebd8;
-  --color-creme-claro: #faf5ea;
-  --color-terracota: #d97736;
-  --color-terracota-escuro: #b85f26;
-  --color-carvao: #34382f;
-  --color-verde-suave: #dce5d6;
+  /* Paleta — mercado rural moderno: a loja real (placas pintadas, cores
+     quentes) traduzida com acabamento gráfico limpo, não imitação de IA. */
+  --color-mata: #1f3b2c;
+  --color-mata-escuro: #15291f;
+  --color-creme: #f6eedd;
+  --color-creme-claro: #fbf6ec;
+  --color-terracota: #c65a2e;
+  --color-terracota-escuro: #a2471f;
+  --color-dourado: #e3a73b;
+  --color-dourado-escuro: #c38a24;
+  --color-carvao: #2a2a22;
+  --color-verde-suave: #dce3d2;
   --color-branco: #ffffff;
 
   /* Tipografia */
-  --font-display: "DM Serif Display", ui-serif, Georgia, serif;
+  --font-display: "Fraunces", ui-serif, Georgia, serif;
   --font-sans: "DM Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "DM Mono", ui-monospace, "SFMono-Regular", monospace;
 
-  /* Raios */
-  --radius-card: 0.5rem;
+  /* Raios: deliberadamente quase nenhum — linguagem de etiqueta/cartaz */
+  --radius-card: 0.125rem;
   --radius-pill: 999px;
 
-  /* Sombra discreta, sem glassmorphism */
-  --shadow-card: 0 1px 2px rgba(52, 56, 47, 0.06), 0 4px 16px rgba(52, 56, 47, 0.08);
-  --shadow-lifted: 0 8px 24px rgba(52, 56, 47, 0.12);
+  --shadow-card: 0 1px 2px rgba(42, 42, 34, 0.06), 0 6px 20px rgba(42, 42, 34, 0.08);
+  --shadow-lifted: 0 10px 30px rgba(42, 42, 34, 0.14);
 
-  /* Largura máxima de conteúdo */
   --container-content: 80rem;
 }
 
@@ -44,8 +46,9 @@
   h2,
   h3 {
     font-family: var(--font-display);
-    font-weight: 400;
+    font-weight: 600;
     letter-spacing: -0.01em;
+    font-variation-settings: "SOFT" 0, "WONK" 0;
   }
 
   :focus-visible {
@@ -55,19 +58,10 @@
 }
 
 @layer components {
-  /* Quiet, deliberate "surface" for areas without real photography yet —
-     a fine hairline grain + soft gradient, never a flat empty block. */
-  .surface-mata {
-    background-color: var(--color-mata);
-    background-image:
-      repeating-linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0 1px, transparent 1px 8px),
-      radial-gradient(140% 100% at 12% 0%, rgba(255, 255, 255, 0.09), transparent 60%);
-  }
-
-  .surface-sand {
-    background-color: var(--color-verde-suave);
-    background-image:
-      repeating-linear-gradient(135deg, rgba(36, 71, 53, 0.05) 0 1px, transparent 1px 8px),
-      radial-gradient(140% 100% at 12% 0%, rgba(255, 255, 255, 0.6), transparent 60%);
+  /* Tabular price typography — the "price tag" motif used across cards. */
+  .price-tag {
+    font-family: var(--font-mono);
+    font-variant-numeric: tabular-nums;
+    letter-spacing: -0.02em;
   }
 }

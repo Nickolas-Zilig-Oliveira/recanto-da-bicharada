@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react"
 import { Link } from "react-router-dom"
+import { Button } from "../../components/Button"
 import { supabase } from "../../lib/supabase"
 import type { Tables } from "../../types/database"
 
@@ -66,14 +67,11 @@ export function AdminProductList() {
     <div>
       <div className="flex flex-wrap items-center justify-between gap-4">
         <div>
-          <h1 className="font-display text-2xl text-carvao">Produtos</h1>
+          <h1 className="font-display text-2xl font-semibold text-carvao">Produtos</h1>
           <p className="mt-1 text-sm text-carvao/60">{products.length} produtos cadastrados.</p>
         </div>
-        <Link
-          to="/admin/produtos/novo"
-          className="rounded-pill bg-terracota px-5 py-2.5 text-sm font-medium text-branco hover:bg-terracota-escuro"
-        >
-          + Novo produto
+        <Link to="/admin/produtos/novo">
+          <Button variant="primary">+ Novo produto</Button>
         </Link>
       </div>
 
@@ -82,16 +80,16 @@ export function AdminProductList() {
         placeholder="Buscar por nome..."
         value={search}
         onChange={(event) => setSearch(event.target.value)}
-        className="mt-6 w-full max-w-sm rounded-card border border-carvao/15 px-4 py-2 text-sm outline-none focus:border-mata"
+        className="mt-6 w-full max-w-sm border border-carvao/20 px-4 py-2 text-sm outline-none focus:border-mata"
       />
 
       {error && (
-        <p className="mt-4 rounded-card bg-terracota/10 px-4 py-2 text-sm text-terracota-escuro">
+        <p className="mt-4 border-2 border-terracota bg-terracota/10 px-4 py-2 text-sm text-terracota-escuro">
           {error}
         </p>
       )}
 
-      <div className="mt-6 overflow-x-auto rounded-card bg-branco shadow-card">
+      <div className="mt-6 overflow-x-auto border-2 border-mata/15 bg-branco">
         <table className="w-full text-left text-sm">
           <thead className="border-b border-carvao/10 text-xs uppercase tracking-wide text-carvao/50">
             <tr>
@@ -121,7 +119,7 @@ export function AdminProductList() {
                 <tr key={product.id} className="border-b border-carvao/5 last:border-0">
                   <td className="px-4 py-3 font-medium text-carvao">{product.name}</td>
                   <td className="px-4 py-3 text-carvao/70">{product.categories?.name ?? "—"}</td>
-                  <td className="px-4 py-3 text-carvao/70">
+                  <td className="price-tag px-4 py-3 text-carvao/70">
                     {(product.price_cents / 100).toLocaleString("pt-BR", {
                       style: "currency",
                       currency: "BRL",

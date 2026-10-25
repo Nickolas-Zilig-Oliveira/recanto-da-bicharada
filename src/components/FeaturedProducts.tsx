@@ -38,9 +38,14 @@ export function FeaturedProducts() {
 
   return (
     <section id="catalogo" className="mx-auto max-w-content px-6 pb-20 sm:pb-28">
-      <div className="flex items-baseline justify-between gap-4 border-b border-carvao/10 pb-5">
-        <h2 className="font-display text-2xl text-carvao sm:text-3xl">Produtos em destaque</h2>
-        <Link to="/catalogo" className="shrink-0 text-xs uppercase tracking-[0.2em] text-mata hover:underline">
+      <div className="flex items-baseline justify-between gap-4 border-b-2 border-mata pb-5">
+        <h2 className="font-display text-2xl font-semibold text-carvao sm:text-3xl">
+          Produtos em destaque
+        </h2>
+        <Link
+          to="/catalogo"
+          className="shrink-0 text-xs font-semibold uppercase tracking-[0.2em] text-terracota hover:underline"
+        >
           Ver tudo
         </Link>
       </div>

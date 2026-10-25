@@ -32,8 +32,8 @@ export function AdminSetup() {
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-creme-claro px-6">
-      <div className="w-full max-w-sm rounded-card bg-branco p-8 text-center shadow-card">
-        <h1 className="font-display text-xl text-carvao">Configuração inicial</h1>
+      <div className="w-full max-w-sm border-2 border-mata bg-branco p-8 text-center">
+        <h1 className="font-display text-xl font-semibold text-carvao">Configuração inicial</h1>
         <p className="mt-2 text-sm text-carvao/60">
           Nenhum administrador foi configurado ainda. Clique abaixo para tornar esta conta
           ({session.user.email}) a primeira administradora do painel. Essa ação só funciona uma vez.

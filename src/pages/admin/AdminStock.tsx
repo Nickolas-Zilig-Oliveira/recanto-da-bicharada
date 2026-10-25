@@ -73,14 +73,14 @@ export function AdminStock() {
 
   return (
     <div>
-      <h1 className="font-display text-2xl text-carvao">Estoque</h1>
+      <h1 className="font-display text-2xl font-semibold text-carvao">Estoque</h1>
       <p className="mt-1 text-sm text-carvao/60">
         Toda alteração passa por aqui e fica registrada no histórico — o saldo nunca é editado direto.
       </p>
 
       <div className="mt-8 grid gap-8 lg:grid-cols-[1fr_1.4fr]">
-        <form onSubmit={handleSubmit} className="flex flex-col gap-4 rounded-card bg-branco p-6 shadow-card">
-          <h2 className="font-display text-lg text-carvao">Registrar movimentação</h2>
+        <form onSubmit={handleSubmit} className="flex flex-col gap-4 border-2 border-mata/15 bg-branco p-6">
+          <h2 className="font-display text-lg font-semibold text-carvao">Registrar movimentação</h2>
 
           <label className="flex flex-col gap-1.5 text-sm text-carvao/80">
             Produto
@@ -146,8 +146,8 @@ export function AdminStock() {
           </Button>
         </form>
 
-        <div className="rounded-card bg-branco p-6 shadow-card">
-          <h2 className="font-display text-lg text-carvao">Histórico recente</h2>
+        <div className="border-2 border-mata/15 bg-branco p-6">
+          <h2 className="font-display text-lg font-semibold text-carvao">Histórico recente</h2>
           {loading ? (
             <p className="mt-4 text-sm text-carvao/50">Carregando...</p>
           ) : movements.length === 0 ? (

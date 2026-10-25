@@ -25,7 +25,7 @@ export function Header() {
   }
 
   return (
-    <header className="sticky top-0 z-40 border-b border-carvao/10 bg-creme-claro/95 backdrop-blur-sm">
+    <header className="sticky top-0 z-40 border-b-2 border-mata bg-creme-claro">
       <div className="mx-auto flex max-w-content items-center justify-between gap-6 px-6 py-3">
         <Link to="/" className="shrink-0">
           <Logo />
@@ -36,20 +36,20 @@ export function Header() {
             <Link
               key={item.to}
               to={item.to}
-              className="text-sm font-medium text-carvao/80 transition-colors hover:text-mata"
+              className="text-xs font-semibold uppercase tracking-wide text-carvao/80 transition-colors hover:text-terracota"
             >
               {item.label}
             </Link>
           ))}
         </nav>
 
-        <div className="flex items-center gap-2 sm:gap-4">
+        <div className="flex items-center gap-1 sm:gap-2">
           <div className="relative">
             <button
               type="button"
               aria-label="Pesquisar produtos"
               onClick={() => setSearchOpen((open) => !open)}
-              className="rounded-full p-2 text-carvao/70 transition-colors hover:bg-mata/10 hover:text-mata"
+              className="p-2 text-carvao/70 transition-colors hover:text-terracota"
             >
               <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="2">
                 <circle cx="11" cy="11" r="7" />
@@ -60,7 +60,7 @@ export function Header() {
             {searchOpen && (
               <form
                 onSubmit={handleSearch}
-                className="absolute right-0 top-12 w-64 rounded-card bg-branco p-2 shadow-lifted"
+                className="absolute right-0 top-12 w-64 border-2 border-mata bg-branco p-2 shadow-lifted"
               >
                 <input
                   autoFocus
@@ -68,7 +68,7 @@ export function Header() {
                   value={query}
                   onChange={(event) => setQuery(event.target.value)}
                   placeholder="Buscar produtos..."
-                  className="w-full rounded-pill border border-carvao/15 px-4 py-2 text-sm text-carvao outline-none focus:border-mata"
+                  className="w-full border border-carvao/20 px-4 py-2 text-sm text-carvao outline-none focus:border-mata"
                 />
               </form>
             )}
@@ -77,7 +77,7 @@ export function Header() {
           <Link
             to="/carrinho"
             aria-label="Carrinho de compras"
-            className="relative rounded-full p-2 text-carvao/70 transition-colors hover:bg-mata/10 hover:text-mata"
+            className="relative p-2 text-carvao/70 transition-colors hover:text-terracota"
           >
             <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="2">
               <path d="M3 4h2l2.4 12.4a2 2 0 0 0 2 1.6h7.6a2 2 0 0 0 2-1.6L21 8H6" strokeLinecap="round" strokeLinejoin="round" />
@@ -85,7 +85,7 @@ export function Header() {
               <circle cx="17" cy="21" r="1" />
             </svg>
             {itemCount > 0 && (
-              <span className="absolute -right-0.5 -top-0.5 flex h-4 w-4 items-center justify-center rounded-full bg-terracota text-[10px] font-semibold text-branco">
+              <span className="absolute -right-1 -top-1 flex h-4 w-4 items-center justify-center bg-terracota text-[10px] font-bold text-branco">
                 {itemCount > 9 ? "9+" : itemCount}
               </span>
             )}
@@ -95,7 +95,7 @@ export function Header() {
             type="button"
             aria-label="Abrir menu"
             onClick={() => setMenuOpen((open) => !open)}
-            className="rounded-full p-2 text-carvao/70 transition-colors hover:bg-mata/10 hover:text-mata lg:hidden"
+            className="p-2 text-carvao/70 transition-colors hover:text-terracota lg:hidden"
           >
             <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="2">
               {menuOpen ? (
@@ -109,13 +109,13 @@ export function Header() {
       </div>
 
       {menuOpen && (
-        <nav className="flex flex-col gap-1 border-t border-carvao/10 px-6 py-4 lg:hidden">
+        <nav className="flex flex-col gap-1 border-t border-mata/20 px-6 py-4 lg:hidden">
           {navItems.map((item) => (
             <Link
               key={item.to}
               to={item.to}
               onClick={() => setMenuOpen(false)}
-              className="rounded-card px-2 py-2.5 text-sm font-medium text-carvao/80 hover:bg-mata/5 hover:text-mata"
+              className="px-2 py-2.5 text-xs font-semibold uppercase tracking-wide text-carvao/80 hover:text-terracota"
             >
               {item.label}
             </Link>

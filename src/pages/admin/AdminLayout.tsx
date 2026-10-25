@@ -24,7 +24,7 @@ export function AdminLayout() {
     return (
       <div className="flex min-h-screen items-center justify-center bg-creme-claro px-6 text-center">
         <div>
-          <p className="font-display text-xl text-carvao">Acesso restrito</p>
+          <p className="font-display text-xl font-semibold text-carvao">Acesso restrito</p>
           <p className="mt-2 text-sm text-carvao/60">
             Sua conta ({session.user.email}) não tem permissão de administrador.
           </p>

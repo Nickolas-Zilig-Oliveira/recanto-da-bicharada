@@ -108,7 +108,7 @@ export function Catalog() {
   return (
     <div className="mx-auto max-w-content px-6 py-12">
       <div className="flex flex-col gap-2">
-        <h1 className="font-display text-3xl text-carvao">Catálogo</h1>
+        <h1 className="font-display text-3xl font-semibold text-carvao">Catálogo</h1>
         <p className="text-sm text-carvao/60">Produtos cadastrados pela loja em tempo real.</p>
       </div>
 
@@ -182,14 +182,14 @@ export function Catalog() {
           {loading ? (
             <p className="mt-16 text-center text-sm text-carvao/50">Carregando...</p>
           ) : products.length === 0 ? (
-            <div className="mt-16 flex flex-col items-center justify-center rounded-card bg-mata/5 px-6 py-16 text-center">
-              <p className="font-display text-xl text-carvao">Nenhum produto encontrado</p>
+            <div className="mt-16 flex flex-col items-center justify-center border-2 border-dashed border-mata/20 px-6 py-16 text-center">
+              <p className="font-display text-xl font-semibold text-carvao">Nenhum produto encontrado</p>
               <p className="mt-2 max-w-sm text-sm text-carvao/60">
                 Tente ajustar os filtros ou buscar por outro termo.
               </p>
             </div>
           ) : (
-            <div className="mt-6 grid grid-cols-2 gap-5 sm:grid-cols-3 xl:grid-cols-4">
+            <div className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-3 xl:grid-cols-4">
               {products.map((product) => (
                 <ProductCard key={product.id} product={product} />
               ))}

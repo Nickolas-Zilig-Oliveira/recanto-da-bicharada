@@ -6,16 +6,16 @@ type LogoProps = {
 export function Logo({ variant = "full", className = "" }: LogoProps) {
   const mark = (
     <svg viewBox="0 0 64 64" className="h-10 w-10 shrink-0" aria-hidden="true">
-      <rect width="64" height="64" rx="14" fill="var(--color-mata)" />
+      <rect width="64" height="64" fill="var(--color-mata)" />
       <path
-        d="M16 40c0-10 7-18 16-18s16 8 16 18"
+        d="M15 41c0-11 7.5-19.5 17-19.5S49 30 49 41"
         stroke="var(--color-creme)"
-        strokeWidth="4"
-        strokeLinecap="round"
+        strokeWidth="4.5"
+        strokeLinecap="square"
         fill="none"
       />
-      <path d="M16 40h32" stroke="var(--color-creme)" strokeWidth="4" strokeLinecap="round" />
-      <path d="M32 22c0-5 3.5-9 8-10-1 4.5-2.5 8-8 10Z" fill="var(--color-terracota)" />
+      <path d="M15 41h34" stroke="var(--color-creme)" strokeWidth="4.5" strokeLinecap="square" />
+      <rect x="29" y="12" width="7" height="7" fill="var(--color-dourado)" />
     </svg>
   )
 
@@ -26,7 +26,7 @@ export function Logo({ variant = "full", className = "" }: LogoProps) {
   return (
     <div className={`flex items-center gap-3 ${className}`}>
       {mark}
-      <span className="font-display text-xl leading-none text-mata">
+      <span className="font-display text-xl font-semibold leading-none text-mata">
         Recanto da
         <br />
         Bicharada

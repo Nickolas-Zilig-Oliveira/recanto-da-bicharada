@@ -170,7 +170,7 @@ export function AdminProductForm() {
 
   return (
     <div className="max-w-2xl">
-      <h1 className="font-display text-2xl text-carvao">
+      <h1 className="font-display text-2xl font-semibold text-carvao">
         {isEditing ? "Editar produto" : "Novo produto"}
       </h1>
 
