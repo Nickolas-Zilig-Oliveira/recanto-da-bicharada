@@ -1,0 +1,55 @@
+@import "tailwindcss";
+
+@theme {
+  /* Paleta — campo contemporâneo */
+  --color-mata: #244735;
+  --color-mata-escuro: #1a3527;
+  --color-creme: #f4ebd8;
+  --color-creme-claro: #faf5ea;
+  --color-terracota: #d97736;
+  --color-terracota-escuro: #b85f26;
+  --color-carvao: #34382f;
+  --color-verde-suave: #dce5d6;
+  --color-branco: #ffffff;
+
+  /* Tipografia */
+  --font-display: "DM Serif Display", ui-serif, Georgia, serif;
+  --font-sans: "DM Sans", ui-sans-serif, system-ui, sans-serif;
+
+  /* Raios */
+  --radius-card: 0.5rem;
+  --radius-pill: 999px;
+
+  /* Sombra discreta, sem glassmorphism */
+  --shadow-card: 0 1px 2px rgba(52, 56, 47, 0.06), 0 4px 16px rgba(52, 56, 47, 0.08);
+  --shadow-lifted: 0 8px 24px rgba(52, 56, 47, 0.12);
+
+  /* Largura máxima de conteúdo */
+  --container-content: 80rem;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: var(--color-creme-claro);
+    color: var(--color-carvao);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-display);
+    font-weight: 400;
+    letter-spacing: -0.01em;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-terracota);
+    outline-offset: 2px;
+  }
+}
