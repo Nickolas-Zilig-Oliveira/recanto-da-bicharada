@@ -1,4 +1,5 @@
-import { sampleCategories } from "../data/sampleProducts"
+import { Link } from "react-router-dom"
+import { categories } from "../data/catalog"
 
 const toneStyles = {
   mata: "bg-mata text-creme",
@@ -14,14 +15,14 @@ export function CategoryGrid() {
       </div>
 
       <div className="mt-8 grid grid-cols-2 gap-4 sm:grid-cols-4">
-        {sampleCategories.map((category) => (
-          <a
+        {categories.map((category) => (
+          <Link
             key={category.id}
-            href={`#catalogo`}
+            to={`/catalogo?categoria=${category.slug}`}
             className={`group flex h-28 flex-col justify-end rounded-card p-4 transition-transform duration-150 hover:-translate-y-0.5 ${toneStyles[category.tone]}`}
           >
             <span className="font-display text-base sm:text-lg">{category.name}</span>
-          </a>
+          </Link>
         ))}
       </div>
     </section>

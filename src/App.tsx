@@ -1,22 +1,18 @@
-import { CategoryGrid } from "./components/CategoryGrid"
-import { EditorialSection } from "./components/EditorialSection"
-import { FeaturedProducts } from "./components/FeaturedProducts"
-import { Footer } from "./components/Footer"
-import { Header } from "./components/Header"
-import { Hero } from "./components/Hero"
+import { Route, Routes } from "react-router-dom"
+import { Layout } from "./components/Layout"
+import { Catalog } from "./pages/Catalog"
+import { Home } from "./pages/Home"
+import { ProductDetail } from "./pages/ProductDetail"
 
 function App() {
   return (
-    <div className="min-h-screen bg-creme-claro">
-      <Header />
-      <main>
-        <Hero />
-        <CategoryGrid />
-        <FeaturedProducts />
-        <EditorialSection />
-      </main>
-      <Footer />
-    </div>
+    <Routes>
+      <Route element={<Layout />}>
+        <Route index element={<Home />} />
+        <Route path="catalogo" element={<Catalog />} />
+        <Route path="produto/:slug" element={<ProductDetail />} />
+      </Route>
+    </Routes>
   )
 }
 
