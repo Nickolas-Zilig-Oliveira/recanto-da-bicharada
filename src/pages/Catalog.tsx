@@ -1,8 +1,8 @@
-import { useMemo, useState } from "react"
+import { useEffect, useState } from "react"
 import { useSearchParams } from "react-router-dom"
-import { ProductCard } from "../components/ProductCard"
-import { categories, getCategoryById, products } from "../data/catalog"
-import type { Product } from "../types/product"
+import { ProductCard, type ProductCardData } from "../components/ProductCard"
+import { supabase } from "../lib/supabase"
+import type { Tables } from "../types/database"
 
 type SortKey = "relevancia" | "menor-preco" | "maior-preco" | "nome"
 
@@ -15,52 +15,85 @@ const sortOptions: { value: SortKey; label: string }[] = [
   { value: "nome", label: "Nome (A-Z)" },
 ]
 
-function sortProducts(list: Product[], sort: SortKey) {
-  const copy = [...list]
-  switch (sort) {
-    case "menor-preco":
-      return copy.sort((a, b) => a.price - b.price)
-    case "maior-preco":
-      return copy.sort((a, b) => b.price - a.price)
-    case "nome":
-      return copy.sort((a, b) => a.name.localeCompare(b.name, "pt-BR"))
-    default:
-      return copy
-  }
-}
-
 export function Catalog() {
   const [searchParams, setSearchParams] = useSearchParams()
+  const [categories, setCategories] = useState<Tables<"categories">[]>([])
+  const [products, setProducts] = useState<ProductCardData[]>([])
+  const [total, setTotal] = useState(0)
+  const [loading, setLoading] = useState(true)
   const [page, setPage] = useState(1)
 
   const activeCategory = searchParams.get("categoria") ?? ""
   const query = searchParams.get("q") ?? ""
   const sort = (searchParams.get("sort") as SortKey) ?? "relevancia"
 
-  const filtered = useMemo(() => {
-    let list = products
+  useEffect(() => {
+    supabase
+      .from("categories")
+      .select("*")
+      .eq("active", true)
+      .order("position")
+      .then(({ data }) => setCategories(data ?? []))
+  }, [])
 
-    if (activeCategory) {
-      list = list.filter((product) => {
-        const category = getCategoryById(product.categoryId)
-        return category?.slug === activeCategory
-      })
-    }
-
-    if (query.trim()) {
-      const q = query.trim().toLowerCase()
-      list = list.filter(
-        (product) =>
-          product.name.toLowerCase().includes(q) || product.brand.toLowerCase().includes(q),
-      )
-    }
-
-    return sortProducts(list, sort)
+  useEffect(() => {
+    setPage(1)
   }, [activeCategory, query, sort])
 
-  const totalPages = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE))
-  const currentPage = Math.min(page, totalPages)
-  const paginated = filtered.slice((currentPage - 1) * PAGE_SIZE, currentPage * PAGE_SIZE)
+  useEffect(() => {
+    async function load() {
+      setLoading(true)
+
+      let request = supabase
+        .from("products")
+        .select("*, categories!inner(name, slug), brands(name)", { count: "exact" })
+        .eq("active", true)
+
+      if (activeCategory) {
+        request = request.eq("categories.slug", activeCategory)
+      }
+      if (query.trim()) {
+        request = request.ilike("name", `%${query.trim()}%`)
+      }
+
+      switch (sort) {
+        case "menor-preco":
+          request = request.order("price_cents", { ascending: true })
+          break
+        case "maior-preco":
+          request = request.order("price_cents", { ascending: false })
+          break
+        case "nome":
+          request = request.order("name", { ascending: true })
+          break
+        default:
+          request = request.order("created_at", { ascending: false })
+      }
+
+      const from = (page - 1) * PAGE_SIZE
+      const { data, count } = await request.range(from, from + PAGE_SIZE - 1)
+
+      setProducts(
+        (data ?? []).map((p) => ({
+          id: p.id,
+          slug: p.slug,
+          name: p.name,
+          brand: p.brands?.name ?? "",
+          unit: p.unit,
+          price_cents: p.price_cents,
+          stock_quantity: p.stock_quantity,
+          low_stock_threshold: p.low_stock_threshold,
+          categoryName: p.categories?.name ?? "",
+          categorySlug: p.categories?.slug ?? "",
+        })),
+      )
+      setTotal(count ?? 0)
+      setLoading(false)
+    }
+    load()
+  }, [activeCategory, query, sort, page])
+
+  const totalPages = Math.max(1, Math.ceil(total / PAGE_SIZE))
 
   function updateParam(key: string, value: string) {
     const next = new URLSearchParams(searchParams)
@@ -70,20 +103,16 @@ export function Catalog() {
       next.delete(key)
     }
     setSearchParams(next)
-    setPage(1)
   }
 
   return (
     <div className="mx-auto max-w-content px-6 py-12">
       <div className="flex flex-col gap-2">
         <h1 className="font-display text-3xl text-carvao">Catálogo</h1>
-        <p className="text-sm text-carvao/60">
-          Catálogo de exemplo — será substituído pelos produtos reais no painel administrativo.
-        </p>
+        <p className="text-sm text-carvao/60">Produtos cadastrados pela loja em tempo real.</p>
       </div>
 
       <div className="mt-8 flex flex-col gap-8 lg:flex-row">
-        {/* Filtros */}
         <aside className="shrink-0 lg:w-56">
           <div className="lg:sticky lg:top-24">
             <h2 className="text-xs font-semibold uppercase tracking-wide text-carvao/50">
@@ -122,15 +151,14 @@ export function Catalog() {
           </div>
         </aside>
 
-        {/* Resultados */}
         <div className="flex-1">
           <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
             <p className="text-sm text-carvao/60">
-              {filtered.length} {filtered.length === 1 ? "produto encontrado" : "produtos encontrados"}
+              {total} {total === 1 ? "produto encontrado" : "produtos encontrados"}
               {query && (
                 <>
                   {" "}
-                  para <span className="font-medium text-carvao">“{query}”</span>
+                  para <span className="font-medium text-carvao">"{query}"</span>
                 </>
               )}
             </p>
@@ -151,7 +179,9 @@ export function Catalog() {
             </label>
           </div>
 
-          {paginated.length === 0 ? (
+          {loading ? (
+            <p className="mt-16 text-center text-sm text-carvao/50">Carregando...</p>
+          ) : products.length === 0 ? (
             <div className="mt-16 flex flex-col items-center justify-center rounded-card bg-mata/5 px-6 py-16 text-center">
               <p className="font-display text-xl text-carvao">Nenhum produto encontrado</p>
               <p className="mt-2 max-w-sm text-sm text-carvao/60">
@@ -160,12 +190,8 @@ export function Catalog() {
             </div>
           ) : (
             <div className="mt-6 grid grid-cols-2 gap-5 sm:grid-cols-3 xl:grid-cols-4">
-              {paginated.map((product) => (
-                <ProductCard
-                  key={product.id}
-                  product={product}
-                  categoryName={getCategoryById(product.categoryId)?.name ?? ""}
-                />
+              {products.map((product) => (
+                <ProductCard key={product.id} product={product} />
               ))}
             </div>
           )}
@@ -178,9 +204,7 @@ export function Catalog() {
                   type="button"
                   onClick={() => setPage(pageNumber)}
                   className={`h-9 w-9 rounded-full text-sm font-medium transition-colors ${
-                    pageNumber === currentPage
-                      ? "bg-mata text-creme"
-                      : "bg-mata/5 text-carvao/70 hover:bg-mata/10"
+                    pageNumber === page ? "bg-mata text-creme" : "bg-mata/5 text-carvao/70 hover:bg-mata/10"
                   }`}
                 >
                   {pageNumber}
