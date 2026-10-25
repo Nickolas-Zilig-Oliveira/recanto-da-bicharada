@@ -36,16 +36,16 @@ export function AdminLayout() {
   return (
     <div className="min-h-screen bg-creme-claro lg:flex">
       {/* Mobile top bar */}
-      <header className="sticky top-0 z-40 flex items-center justify-between border-b border-carvao/10 bg-branco px-4 py-3 lg:hidden">
+      <header className="sticky top-0 z-40 flex items-center justify-between border-b-2 border-mata bg-mata px-4 py-3 lg:hidden">
         <Link to="/admin" className="flex items-center gap-2">
           <Logo variant="mark" />
-          <span className="font-display text-base text-mata">Painel</span>
+          <span className="font-display text-base font-semibold text-creme">Painel</span>
         </Link>
         <button
           type="button"
           aria-label="Abrir menu"
           onClick={() => setMenuOpen((open) => !open)}
-          className="rounded-full p-2 text-carvao/70 hover:bg-mata/10 hover:text-mata"
+          className="p-2 text-creme hover:text-dourado"
         >
           <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="2">
             {menuOpen ? (
@@ -58,7 +58,7 @@ export function AdminLayout() {
       </header>
 
       {menuOpen && (
-        <nav className="flex flex-col gap-1 border-b border-carvao/10 bg-branco px-4 py-3 lg:hidden">
+        <nav className="flex flex-col gap-1 border-b-2 border-mata bg-mata-escuro px-4 py-3 lg:hidden">
           {navItems.map((item) => (
             <NavLink
               key={item.to}
@@ -66,20 +66,20 @@ export function AdminLayout() {
               end={item.end}
               onClick={() => setMenuOpen(false)}
               className={({ isActive }) =>
-                `rounded-card px-3 py-2.5 text-sm font-medium ${
-                  isActive ? "bg-mata text-creme" : "text-carvao/70 hover:bg-mata/5"
+                `px-3 py-2.5 text-xs font-semibold uppercase tracking-wide ${
+                  isActive ? "bg-dourado text-mata" : "text-creme/80 hover:text-dourado"
                 }`
               }
             >
               {item.label}
             </NavLink>
           ))}
-          <div className="mt-2 border-t border-carvao/10 pt-3">
-            <p className="truncate px-3 text-xs text-carvao/50">{session.user.email}</p>
+          <div className="mt-2 border-t border-creme/15 pt-3">
+            <p className="truncate px-3 text-xs text-creme/50">{session.user.email}</p>
             <button
               type="button"
               onClick={() => supabase.auth.signOut()}
-              className="mt-1 px-3 text-xs font-medium text-terracota hover:underline"
+              className="mt-1 px-3 text-xs font-semibold uppercase tracking-wide text-dourado hover:text-creme"
             >
               Sair
             </button>
@@ -88,9 +88,9 @@ export function AdminLayout() {
       )}
 
       {/* Desktop sidebar */}
-      <aside className="hidden w-60 shrink-0 flex-col border-r border-carvao/10 bg-branco px-5 py-6 lg:flex">
+      <aside className="hidden w-64 shrink-0 flex-col border-r-2 border-mata bg-mata px-5 py-6 lg:flex">
         <Link to="/">
-          <Logo variant="mark" className="mb-8" />
+          <Logo variant="mark" className="mb-10" />
         </Link>
         <nav className="flex flex-col gap-1">
           {navItems.map((item) => (
@@ -99,8 +99,8 @@ export function AdminLayout() {
               to={item.to}
               end={item.end}
               className={({ isActive }) =>
-                `rounded-card px-3 py-2 text-sm font-medium transition-colors ${
-                  isActive ? "bg-mata text-creme" : "text-carvao/70 hover:bg-mata/5"
+                `px-3 py-2.5 text-xs font-semibold uppercase tracking-wide transition-colors ${
+                  isActive ? "bg-dourado text-mata" : "text-creme/75 hover:bg-mata-escuro hover:text-dourado"
                 }`
               }
             >
@@ -109,12 +109,12 @@ export function AdminLayout() {
           ))}
         </nav>
 
-        <div className="mt-auto border-t border-carvao/10 pt-4">
-          <p className="truncate text-xs text-carvao/50">{session.user.email}</p>
+        <div className="mt-auto border-t border-creme/15 pt-4">
+          <p className="truncate text-xs text-creme/50">{session.user.email}</p>
           <button
             type="button"
             onClick={() => supabase.auth.signOut()}
-            className="mt-2 text-xs font-medium text-terracota hover:underline"
+            className="mt-2 text-xs font-semibold uppercase tracking-wide text-dourado hover:text-creme"
           >
             Sair
           </button>

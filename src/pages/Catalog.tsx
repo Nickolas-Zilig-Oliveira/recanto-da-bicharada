@@ -115,18 +115,18 @@ export function Catalog() {
       <div className="mt-8 flex flex-col gap-8 lg:flex-row">
         <aside className="shrink-0 lg:w-56">
           <div className="lg:sticky lg:top-24">
-            <h2 className="text-xs font-semibold uppercase tracking-wide text-carvao/50">
+            <h2 className="border-b-2 border-mata pb-2 text-xs font-semibold uppercase tracking-wide text-carvao/60">
               Categorias
             </h2>
-            <ul className="mt-3 flex flex-wrap gap-2 lg:flex-col lg:gap-1">
+            <ul className="mt-3 flex flex-wrap gap-2 lg:flex-col lg:gap-0">
               <li>
                 <button
                   type="button"
                   onClick={() => updateParam("categoria", "")}
-                  className={`w-full rounded-pill px-3 py-1.5 text-left text-sm transition-colors lg:rounded-card ${
+                  className={`w-full border-l-4 px-3 py-2 text-left text-xs font-semibold uppercase tracking-wide transition-colors lg:w-full ${
                     activeCategory === ""
-                      ? "bg-mata text-creme"
-                      : "bg-mata/5 text-carvao/75 hover:bg-mata/10"
+                      ? "border-terracota bg-mata text-creme"
+                      : "border-transparent text-carvao/70 hover:border-mata/40 hover:bg-mata/5"
                   }`}
                 >
                   Todas
@@ -137,10 +137,10 @@ export function Catalog() {
                   <button
                     type="button"
                     onClick={() => updateParam("categoria", category.slug)}
-                    className={`w-full rounded-pill px-3 py-1.5 text-left text-sm transition-colors lg:rounded-card ${
+                    className={`w-full border-l-4 px-3 py-2 text-left text-xs font-semibold uppercase tracking-wide transition-colors ${
                       activeCategory === category.slug
-                        ? "bg-mata text-creme"
-                        : "bg-mata/5 text-carvao/75 hover:bg-mata/10"
+                        ? "border-terracota bg-mata text-creme"
+                        : "border-transparent text-carvao/70 hover:border-mata/40 hover:bg-mata/5"
                     }`}
                   >
                     {category.name}
@@ -168,7 +168,7 @@ export function Catalog() {
               <select
                 value={sort}
                 onChange={(event) => updateParam("sort", event.target.value)}
-                className="rounded-card border border-carvao/15 bg-branco px-3 py-1.5 text-sm text-carvao outline-none focus:border-mata"
+                className="border-2 border-carvao/20 bg-branco px-3 py-1.5 text-sm text-carvao outline-none focus:border-mata"
               >
                 {sortOptions.map((option) => (
                   <option key={option.value} value={option.value}>
@@ -203,8 +203,10 @@ export function Catalog() {
                   key={pageNumber}
                   type="button"
                   onClick={() => setPage(pageNumber)}
-                  className={`h-9 w-9 rounded-full text-sm font-medium transition-colors ${
-                    pageNumber === page ? "bg-mata text-creme" : "bg-mata/5 text-carvao/70 hover:bg-mata/10"
+                  className={`price-tag h-9 w-9 border-2 text-sm font-medium transition-colors ${
+                    pageNumber === page
+                      ? "border-mata bg-mata text-creme"
+                      : "border-carvao/15 text-carvao/70 hover:border-mata"
                   }`}
                 >
                   {pageNumber}
