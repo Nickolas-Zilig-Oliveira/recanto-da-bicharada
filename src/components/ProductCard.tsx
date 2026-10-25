@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom"
 import { getCategoryTone } from "../lib/categoryTone"
+import { Sprig } from "./BrandMotif"
 import { Button } from "./Button"
 
 export type ProductCardData = {
@@ -16,9 +17,9 @@ export type ProductCardData = {
 }
 
 const toneStyles = {
-  mata: "bg-mata/90",
-  terracota: "bg-terracota/90",
-  "verde-suave": "bg-verde-suave",
+  mata: "bg-mata text-creme/20",
+  terracota: "bg-terracota text-creme/20",
+  "verde-suave": "bg-verde-suave text-mata/15",
 }
 
 export function ProductCard({ product }: { product: ProductCardData }) {
@@ -27,23 +28,15 @@ export function ProductCard({ product }: { product: ProductCardData }) {
   const tone = getCategoryTone(product.categorySlug)
 
   return (
-    <article className="group flex flex-col overflow-hidden rounded-card bg-branco shadow-card transition-shadow duration-200 hover:shadow-lifted">
+    <article className="group flex flex-col border border-carvao/10 bg-branco transition-colors duration-150 hover:border-mata/30">
       <Link to={`/produto/${product.slug}`} className="block">
-        <div className={`relative flex h-40 items-center justify-center ${toneStyles[tone]}`}>
-          <svg viewBox="0 0 48 48" className="h-12 w-12 opacity-80" aria-hidden="true">
-            <path
-              d="M24 8c6 4 10 10 10 17a10 10 0 1 1-20 0c0-7 4-13 10-17Z"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              className="text-creme"
-            />
-          </svg>
-          <span className="absolute left-3 top-3 rounded-pill bg-branco/90 px-2.5 py-1 text-[11px] font-medium text-carvao">
-            {product.categoryName}
-          </span>
+        <div className={`relative flex h-36 items-end overflow-hidden ${toneStyles[tone]}`}>
+          <Sprig
+            strokeWidth={1}
+            className="pointer-events-none absolute -right-3 -top-2 h-44 w-28 transition-transform duration-300 group-hover:translate-y-1"
+          />
           {!available && (
-            <span className="absolute inset-0 flex items-center justify-center bg-carvao/50 text-xs font-semibold text-creme">
+            <span className="absolute inset-0 flex items-center justify-center bg-carvao/55 text-xs font-semibold text-creme">
               Indisponível
             </span>
           )}
@@ -52,13 +45,14 @@ export function ProductCard({ product }: { product: ProductCardData }) {
 
       <div className="flex flex-1 flex-col gap-2 p-4">
         <div>
-          {product.brand && (
-            <p className="text-[11px] uppercase tracking-wide text-carvao/45">{product.brand}</p>
-          )}
+          <p className="text-[11px] uppercase tracking-wide text-carvao/40">
+            {product.categoryName}
+            {product.brand && ` · ${product.brand}`}
+          </p>
           <Link to={`/produto/${product.slug}`}>
-            <h3 className="text-sm font-semibold text-carvao hover:text-mata">{product.name}</h3>
+            <h3 className="mt-0.5 text-sm font-semibold text-carvao hover:text-mata">{product.name}</h3>
           </Link>
-          <p className="text-xs text-carvao/60">{product.unit}</p>
+          <p className="text-xs text-carvao/55">{product.unit}</p>
         </div>
 
         {lowStock && (
@@ -67,7 +61,7 @@ export function ProductCard({ product }: { product: ProductCardData }) {
           </p>
         )}
 
-        <div className="mt-auto flex flex-col gap-2">
+        <div className="mt-auto flex flex-col gap-2 pt-1">
           <span className="font-display text-lg text-mata">
             {(product.price_cents / 100).toLocaleString("pt-BR", {
               style: "currency",

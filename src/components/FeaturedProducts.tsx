@@ -37,28 +37,23 @@ export function FeaturedProducts() {
   if (!loading && products.length === 0) return null
 
   return (
-    <section id="catalogo" className="bg-verde-suave/40 py-16 sm:py-20">
-      <div className="mx-auto max-w-content px-6">
-        <div className="flex items-end justify-between gap-4">
-          <div>
-            <h2 className="font-display text-2xl text-carvao sm:text-3xl">Produtos em destaque</h2>
-            <p className="mt-1 text-sm text-carvao/60">Direto do catálogo da loja.</p>
-          </div>
-          <Link to="/catalogo" className="shrink-0 text-sm font-medium text-mata hover:underline">
-            Ver catálogo completo →
-          </Link>
-        </div>
-
-        {loading ? (
-          <p className="mt-8 text-sm text-carvao/50">Carregando...</p>
-        ) : (
-          <div className="mt-8 grid grid-cols-2 gap-5 sm:grid-cols-3 lg:grid-cols-6">
-            {products.map((product) => (
-              <ProductCard key={product.id} product={product} />
-            ))}
-          </div>
-        )}
+    <section id="catalogo" className="mx-auto max-w-content px-6 pb-20 sm:pb-28">
+      <div className="flex items-baseline justify-between gap-4 border-b border-carvao/10 pb-5">
+        <h2 className="font-display text-2xl text-carvao sm:text-3xl">Produtos em destaque</h2>
+        <Link to="/catalogo" className="shrink-0 text-xs uppercase tracking-[0.2em] text-mata hover:underline">
+          Ver tudo
+        </Link>
       </div>
+
+      {loading ? (
+        <p className="mt-8 text-sm text-carvao/50">Carregando...</p>
+      ) : (
+        <div className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">
+          {products.map((product) => (
+            <ProductCard key={product.id} product={product} />
+          ))}
+        </div>
+      )}
     </section>
   )
 }

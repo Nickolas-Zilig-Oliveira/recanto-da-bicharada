@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import { Link, useParams } from "react-router-dom"
 import { Button } from "../components/Button"
+import { Sprig } from "../components/BrandMotif"
 import { getCategoryTone } from "../lib/categoryTone"
 import { supabase } from "../lib/supabase"
 
@@ -97,16 +98,8 @@ export function ProductDetail() {
       </nav>
 
       <div className="mt-6 grid gap-10 lg:grid-cols-2 lg:gap-16">
-        <div className={`flex aspect-square items-center justify-center rounded-card ${toneStyles[tone]}`}>
-          <svg viewBox="0 0 48 48" className="h-24 w-24 opacity-80" aria-hidden="true">
-            <path
-              d="M24 8c6 4 10 10 10 17a10 10 0 1 1-20 0c0-7 4-13 10-17Z"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              className="text-creme"
-            />
-          </svg>
+        <div className={`relative aspect-square overflow-hidden ${toneStyles[tone]}`}>
+          <Sprig strokeWidth={0.75} className="absolute -right-10 -top-6 h-[140%] w-[70%] text-creme/20" />
         </div>
 
         <div className="flex flex-col">
